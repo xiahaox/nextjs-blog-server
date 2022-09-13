@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 {
   "name": "nextjs-blog-server",
   "version": "1.0.0",
@@ -12,37 +11,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "ejs": "^3.1.6",
-    "env-cmd": "^10.1.0",
-    "koa": "^2.13.4",
-    "koa-bodyparser": "^4.3.0",
-    "koa-router": "^10.1.1",
-    "koa-views": "^8.0.0",
-    "koa2-cors": "^2.0.6",
-    "module-alias": "^2.2.2",
-    "require-directory": "^2.1.1",
-    "sequelize": "^6.19.0"
-  },
-  "_moduleAliases": {
-    "@": "src",
-    "@root": "."
-  }
-}
-=======
-{
-  "name": "nextjs-blog-server",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "env-cmd -e dev  -f  ./.env-cmdrc.json node index.js",
-    "pm2:start": "env-cmd -e dev  -f  ./.env-cmdrc.json pm2  start index.js --name server"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "axios": "^0.27.2",
     "ejs": "^3.1.6",
     "env-cmd": "^10.1.0",
     "koa": "^2.13.4",
