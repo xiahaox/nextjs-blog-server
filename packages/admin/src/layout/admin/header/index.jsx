@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+// import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 // import { loginout } from "@/redux/user/actions";
@@ -11,7 +11,7 @@ function AdminHeader(props) {
   //   const dispatch = useDispatch()
   const history = useHistory();
 
-  const userInfo = useSelector((state) => state.user);
+  // const userInfo = useSelector((state) => state.user);
 
   const menu = (
     <Menu className="menu">

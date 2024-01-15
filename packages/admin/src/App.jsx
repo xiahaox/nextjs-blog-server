@@ -1,9 +1,15 @@
 import React, { useEffect } from "react";
-import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+// import { useSelector } from "react-redux";
+
+// config
 import routes from "@/routes";
 
+// components
+// import PublicComponent from "@/components/Public";
+
 const App = (props) => {
-  //   const role = useSelector((state) => state.user.role); // 相当于 connect(state => state.user.role)(App)
+  // const role = useSelector((state) => state.user.role); // 相当于 connect(state => state.user.role)(App)
 
   // 解构 route
   function renderRoutes(routes, contextPath) {
@@ -60,5 +66,5 @@ const App = (props) => {
     </BrowserRouter>
   );
 };
-console.log(21212);
+
 export default App;

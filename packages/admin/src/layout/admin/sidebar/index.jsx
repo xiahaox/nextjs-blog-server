@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, withRouter } from "react-router-dom";
-import { Menu } from "antd";
+import { Menu, Icon } from "antd";
 import menu from "./menu";
-import Icon from "@ant-design/icons";
+// import Icon from "@ant-design/icons";
 
 const SubMenu = Menu.SubMenu;
 
@@ -25,6 +25,7 @@ const menuMenuOpenKeys = getMenuOpenKeys(menu);
 function AdminSidebar(props) {
   // 菜单渲染
   function renderMenu(list) {
+    console.log(list, "==list");
     const renderRoute = (item) => {
       if (item.hidden) return null;
       if (item.children) {
@@ -56,7 +57,6 @@ function AdminSidebar(props) {
     };
     return list.map((l) => renderRoute(l));
   }
-
   const target = menuMenuOpenKeys.find(
     (d) => d.pathname === props.selectedKeys[0]
   );
@@ -67,7 +67,7 @@ function AdminSidebar(props) {
       // defaultSelectedKeys={props.selectedKeys}
       selectedKeys={props.selectedKeys}
       mode="inline"
-      style={{ height: "100%", borderRight: 0 }}
+      // style={{ height: "100%", borderRight: 0 }}
     >
       {renderMenu(menu)}
     </Menu>
