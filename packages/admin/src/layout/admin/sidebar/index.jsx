@@ -3,6 +3,7 @@ import { NavLink, withRouter } from "react-router-dom";
 import { Menu, Icon } from "antd";
 import menu from "./menu";
 // import Icon from "@ant-design/icons";
+import { useSelector, useDispatch } from "react-redux";
 
 const SubMenu = Menu.SubMenu;
 
@@ -23,6 +24,7 @@ function getMenuOpenKeys(menu) {
 const menuMenuOpenKeys = getMenuOpenKeys(menu);
 
 function AdminSidebar(props) {
+  const userInfo = useSelector((state) => state.user);
   // 菜单渲染
   function renderMenu(list) {
     console.log(list, "==list");
@@ -62,15 +64,19 @@ function AdminSidebar(props) {
   );
   const openKeys = target ? [target.openKey] : [];
   return (
-    <Menu
-      defaultOpenKeys={openKeys}
-      // defaultSelectedKeys={props.selectedKeys}
-      selectedKeys={props.selectedKeys}
-      mode="inline"
-      // style={{ height: "100%", borderRight: 0 }}
-    >
-      {renderMenu(menu)}
-    </Menu>
+    <>
+      {1 ? (
+        <Menu
+          defaultOpenKeys={openKeys}
+          // defaultSelectedKeys={props.selectedKeys}
+          selectedKeys={props.selectedKeys}
+          mode="inline"
+          style={{ height: "100%", borderRight: 0 }}
+        >
+          {renderMenu(menu)}
+        </Menu>
+      ) : null}
+    </>
   );
 }
 

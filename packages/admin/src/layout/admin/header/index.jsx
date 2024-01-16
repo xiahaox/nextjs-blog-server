@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-// import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 // import { loginout } from "@/redux/user/actions";
@@ -8,11 +8,11 @@ import { Button, Icon, Dropdown, Menu, Avatar } from "antd";
 import logo from "@/assets/images/avatar.jpeg";
 
 function AdminHeader(props) {
-  //   const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const history = useHistory();
 
-  // const userInfo = useSelector((state) => state.user);
-
+  const userInfo = useSelector((state) => state.user);
+  console.log(userInfo, "==userInfo");
   const menu = (
     <Menu className="menu">
       <Menu.Item>
@@ -34,11 +34,10 @@ function AdminHeader(props) {
   return (
     <>
       <div>
-        {/* <img src={logo} alt='pvmed' /> */}
         <span className="header-title">Blog Manager</span>
         <Dropdown overlay={menu} className="header-dropdown">
           <a className="ant-dropdown-link">
-            {/* {userInfo.username} <Icon type="down" /> */}
+            {userInfo?.username} <Icon type="down" />
           </a>
         </Dropdown>
       </div>

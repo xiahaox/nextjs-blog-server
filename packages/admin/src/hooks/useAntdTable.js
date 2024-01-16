@@ -1,6 +1,5 @@
-import { useState, useEffect, useCallback } from 'react'
-// import axios from '@/utils/axios'
-// import useMount from './useMount'
+import { useState, useEffect, useCallback, useMemo } from 'react'
+import axios from '@/utils/axios'
 
 /**
  * useAntdTable hooks 用于处理 loading 逻辑以及换页 检索等
@@ -14,7 +13,9 @@ export default function useAntdTable({ requestUrl = '', queryParams = null, colu
   const [dataList, setDataList] = useState([])
   const [tablePagination, setTablePagination] = useState({ current: 1, pageSize: 10, totoal: 0 })
 
-  // useMount(fetchListWithLoading)
+  useMemo(() => {
+    fetchListWithLoading()
+  }, [])
 
   function fetchDataList(params) {
     const requestParams = {
@@ -24,28 +25,28 @@ export default function useAntdTable({ requestUrl = '', queryParams = null, colu
       ...params
     }
 
-    // axios
-    //   .get(requestUrl, { params: requestParams })
-    //   .then(response => {
-    //     const { page, pageSize } = requestParams
-    //     const { count, rows } = response
+    axios
+      .get(requestUrl, { params: requestParams })
+      .then(response => {
+        const { page, pageSize } = requestParams
+        const { count, rows } = response
 
-    //     if (count > 0 && count > pageSize) {
-    //       const totalPage = Math.ceil(count / pageSize)
-    //       if (totalPage < page) return fetchDataList({ page: totalPage }) // 例如 删除了列表里只有一项且删除，则需要跳转回前一页 也即最后一页
-    //     }
+        if (count > 0 && count > pageSize) {
+          const totalPage = Math.ceil(count / pageSize)
+          if (totalPage < page) return fetchDataList({ page: totalPage }) // 例如 删除了列表里只有一项且删除，则需要跳转回前一页 也即最后一页
+        }
 
-    //     tablePagination.current = page
-    //     tablePagination.total = count
-    //     setTablePagination({ ...tablePagination }) // 设置分页
-    //     setDataList(rows)
-    //     setLoading(false)
-    //     console.log('%c useAntdTabled', 'background: yellow', requestParams, rows)
-    //   })
-    //   .catch(error => {
-    //     console.log('fetchDataList error: ', requestParams, error)
-    //     setLoading(false)
-    //   })
+        tablePagination.current = page
+        tablePagination.total = count
+        setTablePagination({ ...tablePagination }) // 设置分页
+        setDataList(rows)
+        setLoading(false)
+        console.log('%c useAntdTabled', 'background: yellow', requestParams, rows)
+      })
+      .catch(error => {
+        console.log('fetchDataList error: ', requestParams, error)
+        setLoading(false)
+      })
   }
 
   async function fetchListWithLoading(params) {
