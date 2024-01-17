@@ -13,14 +13,20 @@
   "dependencies": {
     "ejs": "^3.1.6",
     "env-cmd": "^10.1.0",
+    "fs": "0.0.1-security",
+    "joi": "^14.3.1",
     "koa": "^2.13.4",
+    "koa-body": "^6.0.1",
     "koa-bodyparser": "^4.3.0",
     "koa-router": "^10.1.1",
     "koa-views": "^8.0.0",
     "koa2-cors": "^2.0.6",
     "module-alias": "^2.2.2",
+    "moment": "^2.30.1",
+    "mysql2": "^2.3.3",
+    "path": "^0.12.7",
     "require-directory": "^2.1.1",
-    "sequelize": "^6.19.0"
+    "sequelize": "^5.22.5"
   },
   "_moduleAliases": {
     "@": "src",

@@ -61,7 +61,7 @@ function Edit(props) {
   function add() {
     if (!title) return message.warning("标题不能为空！");
     axios
-      .post("/article", {
+      .post("/article/add", {
         title,
         content,
         tagList: tagSelectedList,
