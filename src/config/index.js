@@ -1,5 +1,5 @@
 const config = {
-    PORT: process.env.PORT || 5001, //server启动端口
+    PORT: process.env.PORT || 5005, //server启动端口
     DATABASE: {
         database: 'mysql_blog_2',
         user: 'root',

@@ -6,7 +6,7 @@ import { Icon } from 'antd'
 // import MyInfo from '@/views/web/about/MyInfo'
 
 // API_BASE_URL
-export const API_BASE_URL = 'http://localhost:5001'
+export const API_BASE_URL = 'http://localhost:5005'
 
 // project config
 export const HEADER_BLOG_NAME = '郭大大的博客' // header title 显示的名字
