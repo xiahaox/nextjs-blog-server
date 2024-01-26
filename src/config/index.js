@@ -19,7 +19,11 @@ const config = {
             },
             timezone: '+08:00'
         }
-    }
+    },
+    TOKEN: {
+        secret: 'blog', // secret is very important!
+        expiresIn: '720h' // token 有效期
+    },
 }
 
 module.exports = config;

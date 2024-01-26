@@ -97,7 +97,6 @@ class ArticleController {
                     d.content = d.content.slice(0, 1000) // 只是获取预览，减少打了的数据传输。。。
                 })
             }
-            console.log(data, "==data");
             ctx.body = data
         }
     }

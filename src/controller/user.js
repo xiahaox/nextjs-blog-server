@@ -1,7 +1,7 @@
 
 const Joi = require('joi')
 const { user: UserModel, } = require('../models')
-
+const { createToken } = require('../utils/token')
 /**
   * 获取用户列表
   */
@@ -21,7 +21,7 @@ class UserController {
       const { page = 1, pageSize = 10, username, type } = ctx.query
       const rangeDate = ctx.query['rangeDate[]']
       const where = {
-        role: { $not: 1 }
+        // role: { $not: 1 }
       }
 
       if (username) {
@@ -45,7 +45,6 @@ class UserController {
         order: [['createdAt', 'DESC']]
       })
 
-      // ctx.client(200, 'success', result)
       ctx.body = result
     }
   }
@@ -95,7 +94,7 @@ class UserController {
           const saltPassword = password;
           await UserModel.create({ username, password: saltPassword, email })
           // ctx.client(200, '注册成功')
-          ctx.status = 204
+          ctx.status = 200
         }
       }
     }
@@ -103,6 +102,7 @@ class UserController {
 
   // 登录
   static async login(ctx) {
+
     const { code } = ctx.request.body
     if (code) {
       // await UserController.githubLogin(ctx, code)
@@ -126,10 +126,9 @@ class UserController {
           username: account
         }
       })
-
       if (!user) {
-        // ctx.client(403, '用户不存在')
-        ctx.throw(403, '用户不存在')
+        ctx.status = 403;
+        ctx.body = { err: '用户不存在' }
       } else {
         const isMatch = await new Promise((resolve, reject) => {
           if (password === user.password) {
@@ -139,12 +138,11 @@ class UserController {
           }
         })
         if (!isMatch) {
-          // ctx.client(403, '密码不正确')
-          ctx.throw(403, '密码不正确')
+          ctx.status = 403;
+          ctx.body = { err: '密码不正确' }
         } else {
           const { id, role } = user
           const token = createToken({ username: user.username, userId: id, role }) // 生成 token
-          // ctx.client(200, '登录成功', { username: user.username, role, userId: id, token })
           ctx.body = { username: user.username, role, userId: id, token }
         }
       }
