@@ -20,6 +20,7 @@ if (userInfo) {
  * UserReducer
  */
 export default function UserReducer(state = defaultState, action) {
+    console.log(action, "==action");
     const { type, payload } = action
     switch (type) {
         case TYPES.USER_LOGIN:

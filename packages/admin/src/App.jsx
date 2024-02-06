@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 // config
 import routes from "@/routes";
@@ -9,7 +9,7 @@ import routes from "@/routes";
 // import PublicComponent from "@/components/Public";
 
 const App = (props) => {
-  // const role = useSelector((state) => state.user.role); // 相当于 connect(state => state.user.role)(App)
+  const role = useSelector((state) => state.user.role); // 相当于 connect(state => state.user.role)(App)
 
   // 解构 route
   function renderRoutes(routes, contextPath) {
@@ -20,13 +20,13 @@ const App = (props) => {
         ? `${routeContextPath}/${item.path}`
         : routeContextPath;
       newContextPath = newContextPath.replace(/\/+/g, "/");
-      // if (newContextPath.includes('admin') && role !== 1) {
-      //   item = {
-      //     ...item,
-      //     component: () => <Redirect to='/' />,
-      //     children: [],
-      //   }
-      // }
+      if (newContextPath.includes("admin") && role !== 1) {
+        item = {
+          ...item,
+          component: () => <Redirect to="/" />,
+          children: [],
+        };
+      }
       if (!item.component) return;
 
       if (item.childRoutes) {
