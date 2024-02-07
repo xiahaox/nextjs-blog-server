@@ -100,6 +100,82 @@ class ArticleController {
             ctx.body = data
         }
     }
+    // 获取文章详情
+    static async findById(ctx) {
+        const validator = ctx.validate(
+            { ...ctx.params, ...ctx.query },
+            {
+                id: Joi.number().required(),
+                type: Joi.number() // type 用于区分是否增加浏览次数 1 新增浏览次数 0 不新增
+            }
+        )
+        if (validator) {
+            const data = await ArticleModel.findOne({
+                where: { id: ctx.params.id },
+                include: [
+                    // 查找 分类 标签 评论 回复...
+                    { model: TagModel, attributes: ['name'] },
+                    { model: CategoryModel, attributes: ['name'] },
+                    // {
+                    //     model: CommentModel,
+                    //     attributes: ['id', 'content', 'createdAt'],
+                    //     include: [
+                    //         {
+                    //             model: ReplyModel,
+                    //             attributes: ['id', 'content', 'createdAt'],
+                    //             include: [{ model: UserModel, as: 'user', attributes: { exclude: ['updatedAt', 'password'] } }]
+                    //         },
+                    //         { model: UserModel, as: 'user', attributes: { exclude: ['updatedAt', 'password'] } }
+                    //     ],
+                    //     row: true
+                    // }
+                ],
+                // order: [[CommentModel, 'createdAt', 'DESC'], [[CommentModel, ReplyModel, 'createdAt', 'ASC']]], // comment model order
+                row: true
+            })
+
+            const { type = 1 } = ctx.query
+            // viewer count ++
+            type === 1 && ArticleModel.update({ viewCount: ++data.viewCount }, { where: { id: ctx.params.id } })
+
+            // JSON.parse(github)
+            // data.comments.forEach(comment => {
+            //     comment.user.github = JSON.parse(comment.user.github)
+            //     comment.replies.forEach(reply => {
+            //         reply.user.github = JSON.parse(reply.user.github)
+            //     })
+            // })
+            ctx.body = data
+        }
+    }
+    // 修改文章
+    static async update(ctx) {
+        const validator = ctx.validate(
+            {
+                articleId: ctx.params.id,
+                ...ctx.request.body
+            },
+            {
+                articleId: Joi.number().required(),
+                title: Joi.string(),
+                content: Joi.string(),
+                categories: Joi.array(),
+                tags: Joi.array()
+            }
+        )
+        if (validator) {
+            const { title, content, categories = [], tags = [] } = ctx.request.body
+            const articleId = parseInt(ctx.params.id)
+            const tagList = tags.map(tag => ({ name: tag, articleId }))
+            const categoryList = categories.map(cate => ({ name: cate, articleId }))
+            await ArticleModel.update({ title, content }, { where: { id: articleId } })
+            await TagModel.destroy({ where: { articleId } })
+            await TagModel.bulkCreate(tagList)
+            await CategoryModel.destroy({ where: { articleId } })
+            await CategoryModel.bulkCreate(categoryList)
+            ctx.status = 204
+        }
+    }
     // recommend(ctx, next) {
     //     ctx.body = {
     //         msg: "OK",

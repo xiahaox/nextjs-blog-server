@@ -86,7 +86,7 @@ function ArticleManager(props) {
           return (
             <ul className="action-list">
               <li>
-                <Link to={`/article/${articleId}`}>查看</Link>
+                <Link to={`/admin/article/${articleId}`}>查看</Link>
               </li>
               <li>
                 <Link

@@ -11,8 +11,8 @@ const {
     // checkExist,
     // uploadConfirm,
     // outputAll,
-    // findById,
-    // update,
+    findById,
+    update,
     // delete: del,
     // outputList,
     // delList
@@ -27,6 +27,7 @@ router.get('/tag/list', getTagList) // 获取所有的 tag 列表
 router.get('/category/list', getCategoryList) // 获取 category 列表
 router.post('/article/add', create) // 创建文章
 router.get('/article/list', getList) // 获取文章列表
-
+router.get('/article/:id', findById)
+router.put('/article/:id', update) //修改文章
 
 module.exports = router;

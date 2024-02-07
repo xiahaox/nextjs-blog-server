@@ -86,6 +86,7 @@ function Edit(props) {
       })
       .then(() => {
         message.success("更新成功");
+        props.history.push(`/admin/article/${editId}`);
       });
   }
 
