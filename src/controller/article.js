@@ -5,9 +5,9 @@ const {
     article: ArticleModel,
     tag: TagModel,
     category: CategoryModel,
-    // comment: CommentModel,
+    comment: CommentModel,
     // reply: ReplyModel,
-    // user: UserModel,
+    user: UserModel,
     sequelize
 } = require('../models')
 
@@ -80,11 +80,11 @@ class ArticleController {
                 include: [
                     { model: TagModel, attributes: ['name'], where: tagFilter },
                     { model: CategoryModel, attributes: ['name'], where: categoryFilter },
-                    // {
-                    //     model: CommentModel,
-                    //     attributes: ['id'],
-                    //     include: [{ model: ReplyModel, attributes: ['id'] }]
-                    // }
+                    {
+                        model: CommentModel,
+                        attributes: ['id'],
+                        // include: [{ model: ReplyModel, attributes: ['id'] }]
+                    }
                 ],
                 offset: (page - 1) * pageSize,
                 limit: parseInt(pageSize),
@@ -116,19 +116,19 @@ class ArticleController {
                     // 查找 分类 标签 评论 回复...
                     { model: TagModel, attributes: ['name'] },
                     { model: CategoryModel, attributes: ['name'] },
-                    // {
-                    //     model: CommentModel,
-                    //     attributes: ['id', 'content', 'createdAt'],
-                    //     include: [
-                    //         {
-                    //             model: ReplyModel,
-                    //             attributes: ['id', 'content', 'createdAt'],
-                    //             include: [{ model: UserModel, as: 'user', attributes: { exclude: ['updatedAt', 'password'] } }]
-                    //         },
-                    //         { model: UserModel, as: 'user', attributes: { exclude: ['updatedAt', 'password'] } }
-                    //     ],
-                    //     row: true
-                    // }
+                    {
+                        model: CommentModel,
+                        attributes: ['id', 'content', 'createdAt'],
+                        include: [
+                            // {
+                            //     model: ReplyModel,
+                            //     attributes: ['id', 'content', 'createdAt'],
+                            //     include: [{ model: UserModel, as: 'user', attributes: { exclude: ['updatedAt', 'password'] } }]
+                            // },
+                            { model: UserModel, as: 'user', attributes: { exclude: ['updatedAt', 'password'] } }
+                        ],
+                        row: true
+                    }
                 ],
                 // order: [[CommentModel, 'createdAt', 'DESC'], [[CommentModel, ReplyModel, 'createdAt', 'ASC']]], // comment model order
                 row: true
